@@ -1,4 +1,4 @@
-package soa.group.project.customer_management_system;
+package soa.group.project.cms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

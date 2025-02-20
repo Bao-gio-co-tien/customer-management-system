@@ -12,7 +12,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @PostMapping(value = "create")
+    @PostMapping("/create")
     public ResponseEntity<Boolean> create(
             @RequestBody ClientSdi sdi
     ) {

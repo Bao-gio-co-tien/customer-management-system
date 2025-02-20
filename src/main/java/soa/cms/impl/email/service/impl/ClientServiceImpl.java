@@ -9,7 +9,6 @@ import soa.cms.impl.email.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +33,7 @@ public class ClientServiceImpl implements ClientService {
 
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
             return true;
-        } catch (MessagingException exp){
+        } catch (javax.mail.MessagingException exp){
             exp.printStackTrace();
         }
         return false;

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 @Slf4j
@@ -23,20 +23,28 @@ public class MailServiceImpl implements MailService {
     private SpringTemplateEngine templateEngine;
 
     @Override
-    public void sendHtmlMail(DataMailDTO dataMail, String templateName) throws MessagingException {
-        MimeMessage message = mailSender.createMimeMessage();
+    public void sendHtmlMail(DataMailDTO dataMail, String templateName) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
 
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            Context context = new Context();
+            context.setVariables(dataMail.getProps());
 
-        Context context = new Context();
-        context.setVariables(dataMail.getProps());
+            String html = templateEngine.process(templateName, context);
 
-        String html = templateEngine.process(templateName, context);
+            helper.setTo(dataMail.getTo());
+            helper.setSubject(dataMail.getSubject());
+            helper.setText(html, true);
 
-        helper.setTo(dataMail.getTo());
-        helper.setSubject(dataMail.getSubject());
-        helper.setText(html, true);
-
-        mailSender.send(message);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            log.error("Failed to send email to {}", dataMail.getTo(), e);
+            try {
+                throw e;
+            } catch (MessagingException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 }

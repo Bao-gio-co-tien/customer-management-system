@@ -1,4 +1,4 @@
-package com.laptrinhb2a.springboot.mailsender;
+package soa.group.project.cms.impl.email;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

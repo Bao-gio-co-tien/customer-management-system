@@ -1,0 +1,7 @@
+mailServer:
+  host: smtp.gmail.com
+  port: 587
+  email: minhlh0106@gmail.com
+  password: ctop wovk oqps sqiw
+  protocol: smtp
+  isSSL: false

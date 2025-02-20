@@ -1,7 +1,7 @@
 package soa.cms.impl.information.service;
 
-import com.example.customermanagement.model.Customer;
-import com.example.customermanagement.repository.CustomerRepository;
+import soa.cms.impl.information.model.Customer;
+import soa.cms.impl.information.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

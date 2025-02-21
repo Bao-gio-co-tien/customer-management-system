@@ -18,13 +18,11 @@ public class Application {
 
 }
 
-
 @Controller
 @RequestMapping(value = "/")
 class HomeController {
-
 	@GetMapping
-	public RedirectView index() {
-		return new RedirectView("/client/create"); // Redirect to a different endpoint
+	public String index() {
+		return "client"; 
 	}
 }

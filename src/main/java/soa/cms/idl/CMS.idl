@@ -1,4 +1,4 @@
-module CRM {
+module CMS {
     struct CustomerInfo {
         string customerId;
         string customerName;
@@ -14,7 +14,7 @@ module CRM {
         string content;
         string targetSegment;
         string status;
-    }
+    };
 
     struct CustomerCare {
         string ticketId;
@@ -23,7 +23,7 @@ module CRM {
         string status;
         string priority;
         string resolution
-    }
+    };
 
     interface CustomerInfoService {
         CustomerInfo getCustomer(in string customerId);
@@ -37,7 +37,6 @@ module CRM {
         boolean updateStatus(in string customerId, in string newStatus);
         void logCustomerChange(in string customerId, in string changeType);
     };
-
     interface EmailMarketingService {
         boolean createCampaign(in EmailCampaign campaign);
         boolean sendCampaign(in string campaignId);

@@ -22,14 +22,19 @@ module CMS {
         string issue;
         string status;
         string priority;
-        string resolution
+        string resolution;
     };
+
+    typedef sequence<CustomerInfo> CustomerInfoSeq;
+        typedef sequence<string> StringSeq;
+        typedef sequence<CustomerCare> CustomerCareSeq;
+
 
     interface CustomerInfoService {
         CustomerInfo getCustomer(in string customerId);
-        sequence<CustomerInfo> searchCustomer(in string criteria);
+        CustomerInfoSeq searchCustomer(in string criteria);
         boolean addCustomer(in CustomerInfo customer);
-        sequence<CustomerInfo> getAllCustomer;
+        CustomerInfoSeq getAllCustomer();
     };
 
     interface CustomerUpdateService {
@@ -40,15 +45,15 @@ module CMS {
     interface EmailMarketingService {
         boolean createCampaign(in EmailCampaign campaign);
         boolean sendCampaign(in string campaignId);
-        sequence<string> getCustomerSegment(in string segmentCriteria);
+        StringSeq getCustomerSegment(in string segmentCriteria);
         EmailCampaign getCampaign(in string campaignId);
     };
 
     interface CustomerCareService {
         string createTicket(in CustomerCare ticket);
-        string getTicket(in string ticketId, in CustomerCare updateTicket);
+        boolean updateTicket(in string ticketId, in CustomerCare updateTicket);
         CustomerCare getTicketInfo(in string ticketId);
-        sequence<CustomerCare> getCustomerTicket(in string customerId);
-    }
+        CustomerCareSeq getCustomerTicket(in string customerId);
+    };
 
-}
+};

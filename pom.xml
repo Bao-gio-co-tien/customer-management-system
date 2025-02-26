@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<jacorb.version>3.9</jacorb.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -70,6 +71,22 @@
 			<version>3.9</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jacorb</groupId>
+			<artifactId>jacorb-services</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jacorb</groupId>
+			<artifactId>jacorb-omgapi</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jacorb/jacorb-idl-compiler -->
+		<dependency>
+			<groupId>org.jacorb</groupId>
+			<artifactId>jacorb-idl-compiler</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>3.4.1</version>
@@ -100,12 +117,36 @@
 		<dependency>
 			<groupId>org.apache.thrift</groupId>
 			<artifactId>libthrift</artifactId>
-			<version>0.12.0</version>
+			<version>0.14.0</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>idlj-maven-plugin</artifactId>
+				<version>1.2.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceDirectory>${basedir}/src/main/idl</sourceDirectory>
+					<outputDirectory>${project.build.directory}/generated-sources/idl</outputDirectory>
+					<compiler>idlj</compiler>
+					<sources>
+						<source>
+							<includes>
+								<include>**/*.idl</include>
+							</includes>
+						</source>
+					</sources>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -130,7 +171,39 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.4.0</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/idl</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
+	<repositories>
+		<repository>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Repository Group</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>

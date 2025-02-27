@@ -8,18 +8,17 @@ import org.springframework.stereotype.Service;
 public class CustomerInfoServiceImpl extends CustomerInfoServicePOA {
     @Override
     public CustomerInfo getCustomer(String customerId) {
-        CustomerInfo info = new CustomerInfo();
-        return info;
+        return new CustomerInfo();
     }
 
     @Override
-    public CustomerInfo[] searchCustomer(String criteria) {
+    public CustomerInfo[] searchCustomer(String customerId) {
         return new CustomerInfo[0];
     }
 
     @Override
-    public boolean addCustomer(CustomerInfo customer) {
-        return false;
+    public boolean addCustomer(CustomerInfo customerInfo) {
+        return true;
     }
 
     @Override

@@ -25,27 +25,26 @@ public class Server implements CommandLineRunner {
     @Autowired
     private EmailMarketingServiceImpl emailMarketingService;
 
+
     @Override
     public void run(String... args) throws Exception {
         rootPOA.the_POAManager().activate();
 
-        // Register CustomerInfoService
         org.omg.CORBA.Object customerRef = rootPOA.servant_to_reference(customerInfoService);
         bindService(customerRef, "CustomerInfoService");
 
-        // Register EmailMarketingService
         org.omg.CORBA.Object emailRef = rootPOA.servant_to_reference(emailMarketingService);
         bindService(emailRef, "EmailMarketingService");
 
-        System.out.println("CRM CORBA Services are ready...");
+        System.out.println("CORBA Service are ready");
         orb.run();
     }
 
     private void bindService(org.omg.CORBA.Object ref, String name) throws Exception {
         org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
         NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-        NameComponent path[] = ncRef.to_name(name);
+        NameComponent path[] =ncRef.to_name(name);
         ncRef.rebind(path, ref);
     }
-
 }
+

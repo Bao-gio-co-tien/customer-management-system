@@ -1,30 +1,27 @@
 package soa.cms.service;
 
-import soa.cms.EmailMarketingServicePOA;
+import CMS.EmailCampaign;
+import CMS.EmailMarketingServicePOA;
 import org.springframework.stereotype.Service;
 
 public class EmailMarketingServiceImpl extends EmailMarketingServicePOA{
     @Override
     public boolean createCampaign(EmailCampaign campaign) {
-        // Implementation for creating email campaign
-        return true; // Placeholder
+        return true;
     }
 
     @Override
     public boolean sendCampaign(String campaignId) {
-        // Implementation for sending email campaign
-        return true; // Placeholder
+        return true;
     }
 
     @Override
     public String[] getCustomerSegment(String segmentCriteria) {
-        // Implementation for getting customer segment
-        return new String[0]; // Placeholder
+        return new String[0];
     }
 
     @Override
-    public EmailCampaign getCampaignStatus(String campaignId) {
-        // Implementation for getting campaign status
-        return new EmailCampaign(); // Placeholder
+    public EmailCampaign getCampaign(String campaignId) {
+        return new EmailCampaign();
     }
 }

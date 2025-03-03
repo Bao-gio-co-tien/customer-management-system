@@ -3,7 +3,9 @@ package soa.cms.service;
 import CMS.CustomerCare;
 import CMS.CustomerCareService;
 import CMS.CustomerCareServicePOA;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerCareServiceImpl extends CustomerCareServicePOA {
     @Override
     public String createTicket(CustomerCare ticket) {

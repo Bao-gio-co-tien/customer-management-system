@@ -4,6 +4,7 @@ import CMS.EmailCampaign;
 import CMS.EmailMarketingServicePOA;
 import org.springframework.stereotype.Service;
 
+@Service
 public class EmailMarketingServiceImpl extends EmailMarketingServicePOA{
     @Override
     public boolean createCampaign(EmailCampaign campaign) {

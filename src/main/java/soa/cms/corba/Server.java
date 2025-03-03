@@ -1,5 +1,6 @@
 package soa.cms.corba;
 
+import CMS.CustomerCareServicePOA;
 import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 import org.omg.CosNaming.NameComponent;
@@ -8,7 +9,9 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import soa.cms.service.CustomerCareServiceImpl;
 import soa.cms.service.CustomerInfoServiceImpl;
+import soa.cms.service.CustomerUpdateServiceImpl;
 import soa.cms.service.EmailMarketingServiceImpl;
 
 @Component
@@ -23,7 +26,13 @@ public class Server implements CommandLineRunner {
     private CustomerInfoServiceImpl customerInfoService;
 
     @Autowired
+    private CustomerUpdateServiceImpl customerUpdateService;
+
+    @Autowired
     private EmailMarketingServiceImpl emailMarketingService;
+
+    @Autowired
+    private CustomerCareServiceImpl customerCareService;
 
 
     @Override

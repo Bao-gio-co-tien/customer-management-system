@@ -1,7 +1,6 @@
 package soa.cms.impl.update.controller;
 
-import soa.cms.impl.update.model.Customer;
-import soa.cms.impl.update.service.CustomerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

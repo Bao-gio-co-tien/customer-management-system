@@ -26,9 +26,9 @@ public class Config {
 
         props.put("ORBInitRef.NameService", "corbaloc::localhost:2809/NameService");
 
-        props.put("jacorb.connection.client.connect_timeout", "90000");
-        props.put("jacorb.retries", "5");
-        props.put("jacorb.retry_interval", "500");
+        props.put("jacorb.connection.client.connect_timeout", "120000");
+        props.put("jacorb.retries", "10");
+        props.put("jacorb.retry_interval", "1000");
         props.put("jacorb.poa.thread_pool_max", "20");
         props.put("jacorb.poa.thread_pool_min", "5");
 
@@ -58,10 +58,25 @@ public class Config {
     @Bean
     public NamingContextExt namingContextExt(ORB orb) {
         try {
-            org.omg.CORBA.Object obj = orb.resolve_initial_references("NameService");
-            NamingContextExt namingContext = NamingContextExtHelper.narrow(obj);
-            System.out.println("Connected to NameService successfully");
-            return namingContext;
+            System.out.println("Waiting for NameService to start...");
+            Thread.sleep(5000);
+
+            for (int attempt = 1; attempt <= 5; attempt++) {
+                try {
+                    org.omg.CORBA.Object obj = orb.resolve_initial_references("NameService");
+                    NamingContextExt namingContext = NamingContextExtHelper.narrow(obj);
+                    System.out.println("Connected to NameService successfully");
+                    return namingContext;
+                } catch (Exception e) {
+                    System.err.println("Attempt " + attempt + " failed to connect to NameService: " + e.getMessage());
+                    if (attempt < 5) {
+                        Thread.sleep(2000);
+                    } else {
+                        throw e;
+                    }
+                }
+            }
+            throw new RuntimeException("Failed to connect to NameService after multiple attempts");
         } catch (Exception e) {
             System.err.println("Could not connect to NameService: " + e.getMessage());
             e.printStackTrace();

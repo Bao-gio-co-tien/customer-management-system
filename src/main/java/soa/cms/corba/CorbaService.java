@@ -35,9 +35,7 @@ public class CorbaService {
                 System.err.println("WARNING: CORBA Service initialized, but NameService might not be reachable.");
             }
 
-            Thread orbThread = new Thread(() -> {
-                orb.run();
-            });
+            Thread orbThread = new Thread(orb::run);
             orbThread.setDaemon(true);
             orbThread.start();
 

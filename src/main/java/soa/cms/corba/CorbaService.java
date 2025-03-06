@@ -4,6 +4,7 @@ import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.PortableServer.POA;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -11,9 +12,10 @@ import javax.annotation.PostConstruct;
 @Service
 public class CorbaService {
 
-    private final ORB orb;
-    private final POA rootPOA;
-    private final NamingContextExt namingContext;
+    private ORB orb;
+
+    private POA rootPOA;
+    private NamingContextExt namingContext;
 
     @Autowired
     public CorbaService(ORB orb, POA rootPOA, NamingContextExt namingContext) {

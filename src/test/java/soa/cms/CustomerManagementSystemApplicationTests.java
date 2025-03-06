@@ -2,18 +2,14 @@ package soa.cms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import soa.cms.corba.TestConfig;
+import soa.cms.corba.TestCorbaConfig;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@ComponentScan(
-	excludeFilters = @ComponentScan.Filter(
-			type = FilterType.ASSIGNABLE_TYPE,
-			classes = soa.cms.corba.Config.class
-	)
-)
+@Import({TestConfig.class, TestCorbaConfig.class})
 class CustomerManagementSystemApplicationTests {
 
 	@Test

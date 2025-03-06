@@ -13,14 +13,11 @@ import javax.annotation.PostConstruct;
 public class CorbaService {
 
     private ORB orb;
-    public CorbaService(@Qualifier("orb") ORB orb) {
-        this.orb = orb;
-    }
     private POA rootPOA;
     private NamingContextExt namingContext;
 
     @Autowired
-    public CorbaService(ORB orb, @Qualifier("rootPOA") POA rootPOA, @Qualifier("namingContextExt") NamingContextExt namingContext) {
+    public CorbaService(ORB orb, POA rootPOA, NamingContextExt namingContext) {
         this.orb = orb;
         this.rootPOA = rootPOA;
         this.namingContext = namingContext;

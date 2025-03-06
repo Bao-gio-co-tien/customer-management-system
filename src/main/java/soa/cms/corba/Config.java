@@ -16,7 +16,7 @@ import java.util.Properties;
 @Profile("!test")
 public class Config {
     @Bean
-    public ORB org() throws Exception {
+    public ORB orb() throws Exception {
         System.setProperty("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
         System.setProperty("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
 
@@ -32,27 +32,39 @@ public class Config {
         props.put("jacorb.poa.thread_pool_max", "20");
         props.put("jacorb.poa.thread_pool_min", "5");
 
-        return ORB.init(new String[]{}, props);
+        ORB orb = ORB.init(new String[]{}, props);
+        System.out.println("ORB initialized successfully");
+        return orb;
     }
 
     @Bean
     public POA rootPOA(ORB orb) throws Exception {
-        org.omg.CORBA.Object obj = orb.resolve_initial_references("RootPOA");
-        POA rootPOA = POAHelper.narrow(obj);
+        try {
+            org.omg.CORBA.Object obj = orb.resolve_initial_references("RootPOA");
+            POA rootPOA = POAHelper.narrow(obj);
 
-        POAManager manager = rootPOA.the_POAManager();
-        manager.activate();
+            POAManager manager = rootPOA.the_POAManager();
+            manager.activate();
 
-        return rootPOA;
+            System.out.println("RootPOA activated successfully");
+            return rootPOA;
+        } catch (Exception e) {
+            System.err.println("Failed to initialize RootPOA: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Failed to initialize RootPOA", e);
+        }
     }
 
     @Bean
     public NamingContextExt namingContextExt(ORB orb) {
         try {
             org.omg.CORBA.Object obj = orb.resolve_initial_references("NameService");
-            return NamingContextExtHelper.narrow(obj);
+            NamingContextExt namingContext = NamingContextExtHelper.narrow(obj);
+            System.out.println("Connected to NameService successfully");
+            return namingContext;
         } catch (Exception e) {
             System.err.println("Could not connect to NameService: " + e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException("Failed to connect to NameService", e);
         }
     }

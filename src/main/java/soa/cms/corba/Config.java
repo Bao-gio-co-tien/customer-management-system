@@ -24,11 +24,11 @@ public class Config {
         props.put("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
         props.put("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
 
-        props.put("ORBInitRef.NameService", "corbaloc::localhost:2809/NameService");
+        props.put("ORBInitRef.NameService", "corbaloc::localhost:1050/NameService");
 
         props.put("jacorb.connection.client.connect_timeout", "120000");
         props.put("jacorb.retries", "10");
-        props.put("jacorb.retry_interval", "1000");
+        props.put("jacorb.retry_interval", "2000");
         props.put("jacorb.poa.thread_pool_max", "20");
         props.put("jacorb.poa.thread_pool_min", "5");
 
@@ -61,7 +61,7 @@ public class Config {
             System.out.println("Waiting for NameService to start...");
             Thread.sleep(5000);
 
-            for (int attempt = 1; attempt <= 5; attempt++) {
+            for (int attempt = 1; attempt <= 10; attempt++) {
                 try {
                     org.omg.CORBA.Object obj = orb.resolve_initial_references("NameService");
                     NamingContextExt namingContext = NamingContextExtHelper.narrow(obj);
@@ -69,8 +69,8 @@ public class Config {
                     return namingContext;
                 } catch (Exception e) {
                     System.err.println("Attempt " + attempt + " failed to connect to NameService: " + e.getMessage());
-                    if (attempt < 5) {
-                        Thread.sleep(2000);
+                    if (attempt < 10) {
+                        Thread.sleep(5000);
                     } else {
                         throw e;
                     }

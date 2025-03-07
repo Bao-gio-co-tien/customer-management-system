@@ -14,9 +14,9 @@ public class NameServiceConfig {
         try {
             System.setProperty("org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB");
             System.setProperty("org.omg.CORBA.ORBSingletonClass", "org.jacorb.orb.ORBSingleton");
-            System.setProperty("OAPort", "2809");
+            System.setProperty("OAPort", "1050");
 
-            String[] nameServerArgs = {"-DOAPort=2809"};
+            String[] nameServerArgs = {"-DOAPort=1050"};
 
             Thread nameServerThread = new Thread(() -> {
                 try {
@@ -29,7 +29,7 @@ public class NameServiceConfig {
             nameServerThread.setDaemon(false);
             nameServerThread.start();
 
-            System.out.println("JacORB Name Service started on port 2809");
+            System.out.println("JacORB Name Service started on port 1050");
         } catch (Exception e) {
             System.err.println("Failed to start NameServer: " + e.getMessage());
             e.printStackTrace();
